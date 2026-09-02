@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Free SD",
+    "slug": "free-sd-mobile",
+    "scheme": "freesd",
+    "plugins": ["expo-router"],
+    "splash": {
+      "backgroundColor": "#ffffff",
+      "resizeMode": "contain"
+    },
+    "ios": { "supportsTablet": true },
+    "android": {},
+    "extra": { "router": {} }
+  }
+}
