@@ -16,6 +16,7 @@ origins = [
     "https://freesd-2.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://prebys-9xw0vnjv6-laila-azizs-projects.vercel.app",
 ]
 
 app.add_middleware(
