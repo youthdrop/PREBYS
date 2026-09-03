@@ -11,6 +11,7 @@ from app.models import youth as youth_models
 app = FastAPI(title=settings.app_name)
 
 origins = [
+    "https://prebys-git-main-laila-azizs-projects.vercel.app",
     "https://prebys-9xw0vnjv6-laila-azizs-projects.vercel.app",
     "https://freesd.org",
     "https://www.freesd.org",
