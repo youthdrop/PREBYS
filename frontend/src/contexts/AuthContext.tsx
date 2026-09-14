@@ -90,7 +90,3 @@ export function AuthProvider({
     </AuthContext.Provider>
   )
 }
-
-export function useAuth() {
-  return useContext(AuthContext)
-}
