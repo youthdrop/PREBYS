@@ -1,31 +1,37 @@
 import {
   createContext,
   ReactNode,
-  useContext,
   useMemo,
   useState,
 } from 'react'
 
-type User = {
+export type User = {
   email: string
   role?: string
 } | null
 
-type AuthContextType = {
+export type AuthContextType = {
   token: string | null
   user: User
-  setSession: (token: string, user: NonNullable<User>) => void
+  setSession: (
+    token: string,
+    user: NonNullable<User>
+  ) => void
   logout: () => void
 }
 
-const AuthContext = createContext<AuthContextType>({
+export const AuthContext = createContext<AuthContextType>({
   token: null,
   user: null,
   setSession: () => {},
   logout: () => {},
 })
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({
+  children,
+}: {
+  children: ReactNode
+}) {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem('prebys_token')
   )
@@ -49,7 +55,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     newToken: string,
     newUser: NonNullable<User>
   ) => {
-    localStorage.setItem('prebys_token', newToken)
+    localStorage.setItem(
+      'prebys_token',
+      newToken
+    )
+
     localStorage.setItem(
       'prebys_user',
       JSON.stringify(newUser)
@@ -67,7 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null)
   }
 
-  const value = useMemo(
+  const value = useMemo<AuthContextType>(
     () => ({
       token,
       user,
