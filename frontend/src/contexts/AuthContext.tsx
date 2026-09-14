@@ -1,12 +1,14 @@
 import {
   createContext,
   ReactNode,
+  useContext,
   useMemo,
   useState,
 } from 'react'
 
 export type User = {
   email: string
+  full_name?: string
   role?: string
 } | null
 
@@ -92,6 +94,10 @@ export function AuthProvider({
       {children}
     </AuthContext.Provider>
   )
+}
+
+export function useAuth(): AuthContextType {
+  return useContext(AuthContext)
 }
 
 export function useAuth() {
