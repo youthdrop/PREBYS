@@ -1,7 +1,6 @@
 import {
   createContext,
   ReactNode,
-  useContext,
   useMemo,
   useState,
 } from 'react'
@@ -57,11 +56,7 @@ export function AuthProvider({
     newToken: string,
     newUser: NonNullable<User>
   ) => {
-    localStorage.setItem(
-      'prebys_token',
-      newToken
-    )
-
+    localStorage.setItem('prebys_token', newToken)
     localStorage.setItem(
       'prebys_user',
       JSON.stringify(newUser)
@@ -94,10 +89,6 @@ export function AuthProvider({
       {children}
     </AuthContext.Provider>
   )
-}
-
-export function useAuth(): AuthContextType {
-  return useContext(AuthContext)
 }
 
 export function useAuth() {
