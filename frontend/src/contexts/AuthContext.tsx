@@ -1,6 +1,15 @@
-import { createContext, useEffect, useMemo, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 
-type User = { email: string; full_name?: string; role: string } | null
+type User = {
+  email: string
+  role?: string
+} | null
 
 type AuthContextType = {
   token: string | null
@@ -9,31 +18,61 @@ type AuthContextType = {
   logout: () => void
 }
 
-export const AuthContext = createContext<AuthContextType>({
+const AuthContext = createContext<AuthContextType>({
   token: null,
   user: null,
   setSession: () => {},
-  logout: () => {}
+  logout: () => {},
 })
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('free_sd_token'))
-  const [user, setUser] = useState<User>(JSON.parse(localStorage.getItem('free_sd_user') || 'null'))
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem('prebys_token')
+  )
 
-  const setSession = (newToken: string, newUser: NonNullable<User>) => {
-    localStorage.setItem('free_sd_token', newToken)
-    localStorage.setItem('free_sd_user', JSON.stringify(newUser))
+  const [user, setUser] = useState<User>(
+    JSON.parse(localStorage.getItem('prebys_user') || 'null')
+  )
+
+  const setSession = (
+    newToken: string,
+    newUser: NonNullable<User>
+  ) => {
+    localStorage.setItem('prebys_token', newToken)
+    localStorage.setItem(
+      'prebys_user',
+      JSON.stringify(newUser)
+    )
+
     setToken(newToken)
     setUser(newUser)
   }
 
   const logout = () => {
-    localStorage.removeItem('free_sd_token')
-    localStorage.removeItem('free_sd_user')
+    localStorage.removeItem('prebys_token')
+    localStorage.removeItem('prebys_user')
+
     setToken(null)
     setUser(null)
   }
 
-  const value = useMemo(() => ({ token, user, setSession, logout }), [token, user])
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      token,
+      user,
+      setSession,
+      logout,
+    }),
+    [token, user]
+  )
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export function useAuth() {
+  return useContext(AuthContext)
 }
