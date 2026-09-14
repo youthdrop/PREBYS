@@ -11,11 +11,7 @@ from app.models import youth as youth_models
 app = FastAPI(title=settings.app_name)
 
 origins = [
-    "https://prebys-git-main-laila-azizs-projects.vercel.app",
-    "https://prebys-9xw0vnjv6-laila-azizs-projects.vercel.app",
-    "https://freesd.org",
-    "https://www.freesd.org",
-    "https://freesd-2.vercel.app",
+    "https://prebys.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
@@ -23,6 +19,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://prebys-.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
