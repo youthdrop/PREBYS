@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || 'https://freesd2-production.up.railway.app'
+  import.meta.env.VITE_API_URL ||
+  'https://prebys-production.up.railway.app';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
