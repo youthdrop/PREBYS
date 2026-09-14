@@ -30,9 +30,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.getItem('prebys_token')
   )
 
-  const [user, setUser] = useState<User>(
-    JSON.parse(localStorage.getItem('prebys_user') || 'null')
-  )
+  const [user, setUser] = useState<User>(() => {
+    const storedUser = localStorage.getItem('prebys_user')
+
+    if (!storedUser) {
+      return null
+    }
+
+    try {
+      return JSON.parse(storedUser)
+    } catch {
+      localStorage.removeItem('prebys_user')
+      return null
+    }
+  })
 
   const setSession = (
     newToken: string,
