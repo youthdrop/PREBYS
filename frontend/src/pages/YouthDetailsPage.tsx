@@ -2,6 +2,8 @@ import { FormEvent, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import api from '../api/client'
 import AppShell from '../layouts/AppShell'
+import YouthStipends from '../components/YouthStipends'
+
 
 const emptyNote = { note_type: 'General case note', contact_method: 'In person', note: '', next_action: '', next_contact_date: '', confidential: false }
 
@@ -124,15 +126,69 @@ export default function YouthDetailsPage() {
       </div>
     </section>
 
-    <section className="panel" style={{ marginTop: '1rem' }}>
-      <p className="eyebrow">Document center</p><h2>Employment and School Verification</h2>
-      <p className="muted" style={{ margin: '.5rem 0 1rem' }}>Allowed files: PDF, JPG, PNG, WEBP, or DOCX. Maximum file size is 10 MB.</p>
-      <form className="form-grid" onSubmit={upload}>
-        <label>Document type<select value={documentType} onChange={(e) => setDocumentType(e.target.value)}><option value="employment_verification">Employment verification</option><option value="school_verification">School verification</option></select></label>
-        <label>File<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.docx" onChange={(e) => setFile(e.target.files?.[0] || null)} /></label>
-        <div className="full-span"><button disabled={!file}>Upload document</button></div>
-      </form>
-      <div className="document-list">{documents.map((doc) => <div className="document-row" key={doc.id}><div><span>{doc.document_type.replaceAll('_', ' ')}</span><strong>{doc.original_filename}</strong><small>Uploaded {new Date(doc.uploaded_at).toLocaleString()}</small></div><button onClick={() => download(doc)}>Download</button></div>)}</div>
-    </section>
-  </AppShell>
+<section className="panel" style={{ marginTop: '1rem' }}>
+  <p className="eyebrow">Document center</p>
+  <h2>Employment and School Verification</h2>
+
+  <p className="muted" style={{ margin: '.5rem 0 1rem' }}>
+    Allowed files: PDF, JPG, PNG, WEBP, or DOCX.
+    Maximum file size is 10 MB.
+  </p>
+
+  <form className="form-grid" onSubmit={upload}>
+    <label>
+      Document type
+      <select
+        value={documentType}
+        onChange={(e) => setDocumentType(e.target.value)}
+      >
+        <option value="employment_verification">
+          Employment verification
+        </option>
+        <option value="school_verification">
+          School verification
+        </option>
+      </select>
+    </label>
+
+    <label>
+      File
+      <input
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png,.webp,.docx"
+        onChange={(e) => setFile(e.target.files?.[0] || null)}
+      />
+    </label>
+
+    <div className="full-span">
+      <button disabled={!file}>
+        Upload document
+      </button>
+    </div>
+  </form>
+
+  <div className="document-list">
+    {documents.map((doc) => (
+      <div className="document-row" key={doc.id}>
+        <div>
+          <span>
+            {doc.document_type.replaceAll('_', ' ')}
+          </span>
+          <strong>{doc.original_filename}</strong>
+          <small>
+            Uploaded {new Date(doc.uploaded_at).toLocaleString()}
+          </small>
+        </div>
+
+        <button onClick={() => download(doc)}>
+          Download
+        </button>
+      </div>
+    ))}
+  </div>
+</section>
+
+<YouthStipends youthId={Number(id)} />
+
+</AppShell>
 }
